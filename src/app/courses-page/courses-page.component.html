@@ -1,1 +1,16 @@
-<p>courses-page works!</p>
+<div  *ngFor="let course of courses" class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="media text-muted pt-3">
+    <div class="media-body pb-3 mb-0 small lh-125 border-gray">
+      <strong class="d-block text-gray-dark">{{course.title}}</strong>
+      {{course.description}}
+    </div>
+    <div class="media-body pb-3 mb-0 small lh-125 ">
+      <strong class="d-block text-gray-dark">{{course.date}}   {{course.duration}}</strong>
+      <button (click)="edit()" class="btn-primary">Edit</button><button (click)="delete()" class="btn-primary">Delete</button>
+    </div>
+
+  </div>
+</div>
+<small class="d-block text-center mt-3">
+  <a  (click)="loadMore()" href="#">Load More</a>
+</small>
