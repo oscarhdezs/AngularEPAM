@@ -6,6 +6,9 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FakeLogoComponent } from './fake-logo/fake-logo.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
+import { CourseDirective } from './directives/course.directive';
+import { DurationPipe } from './pipes/duration.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
   declarations: [
@@ -13,7 +16,10 @@ import { CoursesPageComponent } from './courses-page/courses-page.component';
     HeaderComponent,
     FooterComponent,
     FakeLogoComponent,
-    CoursesPageComponent
+    CoursesPageComponent,
+    CourseDirective,
+    DurationPipe,
+    OrderByPipe,
   ],
   imports: [
     BrowserModule

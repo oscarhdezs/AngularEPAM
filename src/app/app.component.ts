@@ -9,15 +9,18 @@ export class AppComponent {
   title = 'task1';
 
   courses = [{title: 'Video Course 1. Tag Name',
-    duration: '1:28',
-    date: '3 nov 2019',
-    description: 'Learn how to use the Tag Name attribute'},
+    duration: 120,
+    date: new Date(2019, 10, 13),
+    description: 'Learn how to use the Tag Name attribute',
+    topRated: true},
     {title: 'Video Course 2. Hook LifeCycle',
-      duration: '5:28',
-      date: '12 dic 2019',
-      description: 'Learn how to implements the hook lifecycle in our components'},
+      duration: 180,
+      date: new Date(2019, 12, 12),
+      description: 'Learn how to implements the hook lifecycle in our components',
+      topRated: false},
     {title: 'Video Course 3. Components',
-      duration: '14:28',
-      date: '15 jan 2019',
-      description: 'Learn how to create components using the cli utility'}];
+      duration: 400,
+      date: new Date(2019, 1, 15),
+      description: 'Learn how to create components using the cli utility',
+      topRated: true}];
 }
