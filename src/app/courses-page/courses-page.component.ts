@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CourseService} from '../service/course/course.service';
 
 @Component({
   selector: 'app-courses-page',
@@ -8,8 +9,10 @@ import {Component, Input, OnInit} from '@angular/core';
 export class CoursesPageComponent implements OnInit {
 
   @Input() courses;
+  popOverTitle = 'Course Delete Confirmation';
+  popOverMessage = 'Are you sure want remove this course?';
 
-  constructor() { }
+  constructor(private courseService: CourseService) { }
 
   ngOnInit() {
   }
@@ -20,7 +23,9 @@ export class CoursesPageComponent implements OnInit {
   edit() {
     console.log('edit content');
   }
-  delete() {
-    console.log('delete content');
+  delete(id: number) {
+    console.log('delete content', id);
+    this.courseService.removeItem(id);
+
   }
 }

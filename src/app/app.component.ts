@@ -1,26 +1,27 @@
-import { Component } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {CourseService} from './service/course/course.service';
+import {APP_STORAGE} from './core/core.module';
+import {AuthorizationService} from './service/authorization/authorization.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements  OnInit {
+
+  constructor(private courseService: CourseService,
+              private authService: AuthorizationService,
+              @Inject(APP_STORAGE) private  storage) {}
+
+  courses = [];
+  authenticated ;
   title = 'task1';
 
-  courses = [{title: 'Video Course 1. Tag Name',
-    duration: 120,
-    date: new Date(2019, 10, 13),
-    description: 'Learn how to use the Tag Name attribute',
-    topRated: true},
-    {title: 'Video Course 2. Hook LifeCycle',
-      duration: 180,
-      date: new Date(2019, 12, 12),
-      description: 'Learn how to implements the hook lifecycle in our components',
-      topRated: false},
-    {title: 'Video Course 3. Components',
-      duration: 400,
-      date: new Date(2019, 1, 15),
-      description: 'Learn how to create components using the cli utility',
-      topRated: true}];
+  ngOnInit(): void {
+    this.courses = this.courseService.getList();
+    this.authenticated = this.authService.isAuthenticated();
+    console.log('is ?' + this.authenticated);
+  }
+
 }
