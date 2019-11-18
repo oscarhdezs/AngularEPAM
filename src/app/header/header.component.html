@@ -4,7 +4,11 @@
       <span class="glyphicon glyphicon-play-circle"></span>
       <Strong>Video Course</Strong>
     </a>
-    <label>{{userName}}</label>
+    <a  *ngIf="isAuth" class="py-2 d-none d-md-inline-block" href="#">
+      <span class="glyphicon glyphicon-play-circle"></span>
+      <Strong>{{userName}}</Strong>
+    </a>
+
     <a  *ngIf="isAuth" class="py-2 d-none d-md-inline-block" href="#" (click)="logout()">Log Off</a>
   </div>
 </div>

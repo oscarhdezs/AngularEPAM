@@ -9,6 +9,8 @@ import {AuthorizationService} from '../service/authorization/authorization.servi
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  @Output() logoutEvent = new EventEmitter<string>();
   course: Course;
   isAuth: boolean;
   userName: string;
@@ -33,7 +35,8 @@ export class HeaderComponent implements OnInit {
   }
   logout() {
     console.log('Logout');
-    this.authService.logout();
+    this.logoutEvent.emit('logout');
+//    this.authService.logout();
     this.isAuth = !this.isAuth;
   }
 }

@@ -24,4 +24,9 @@ export class AppComponent implements  OnInit {
     console.log('is ?' + this.authenticated);
   }
 
+  logout(): void {
+    console.log('Event emmited');
+    this.authService.logout();
+    this.authenticated = this.authService.isAuthenticated();
+  }
 }
