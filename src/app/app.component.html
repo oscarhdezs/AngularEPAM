@@ -1,13 +1,15 @@
 <div class="app">
 <app-header
+  (isAddCourse)="addCourse()"
   (logoutEvent)="logout()"
 ></app-header>
 <app-login-page
   *ngIf="authenticated==='false'"
 ></app-login-page>
 <app-courses-page
-  *ngIf="authenticated==='true'"
+  *ngIf="authenticated==='true' && isAddCourse===false"
   [courses]="courses"
 ></app-courses-page>
+  <app-add-courses-page *ngIf="isAddCourse===true"></app-add-courses-page>
 <app-footer></app-footer>
 </div>

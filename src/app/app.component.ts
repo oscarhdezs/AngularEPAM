@@ -17,16 +17,22 @@ export class AppComponent implements  OnInit {
   courses = [];
   authenticated ;
   title = 'task1';
+  isAddCourse: boolean;
 
   ngOnInit(): void {
     this.courses = this.courseService.getList();
     this.authenticated = this.authService.isAuthenticated();
     console.log('is ?' + this.authenticated);
+    this.isAddCourse = false;
   }
 
   logout(): void {
     console.log('Event emmited');
     this.authService.logout();
     this.authenticated = this.authService.isAuthenticated();
+  }
+
+  addCourse() {
+    this.isAddCourse = true;
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CourseService} from '../service/course/course.service';
 import {Course} from '../model/course';
 import {AuthorizationService} from '../service/authorization/authorization.service';
@@ -6,11 +6,13 @@ import {AuthorizationService} from '../service/authorization/authorization.servi
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
 
   @Output() logoutEvent = new EventEmitter<string>();
+  @Output() isAddCourse = new EventEmitter<boolean>();
   course: Course;
   isAuth: boolean;
   userName: string;
@@ -29,6 +31,7 @@ export class HeaderComponent implements OnInit {
     this.courseService.createCourse(this.course);
     this.userName = this.authService.getUserInfo();
     console.log('user:' + this.userName);
+    this.isAddCourse.emit(true);
   }
   filter() {
     console.log('Filtrando');

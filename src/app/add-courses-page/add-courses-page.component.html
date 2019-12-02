@@ -1,0 +1,17 @@
+<form>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" [(ngModel)]="title" class="form-control" id="title" placeholder="video Course 1">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea [(ngModel)]="authors" class="form-control" id="description" rows="3"></textarea>
+  </div>
+  <app-date [date]="date"></app-date>
+  <app-duration [duration]="duration"></app-duration>
+  <app-authors [author]="authors"></app-authors>
+  <div class="form-group">
+    <button class="btn btn-outline-success my-2 my-sm-0" (click)="save()" >Save</button>
+    <button class="btn btn-outline-danger my-2 my-sm-0" (click)="cancel()" >Cancel</button>
+  </div>
+</form>

@@ -1,0 +1,21 @@
+<div  *ngFor="let course of courses | orderBy ; let i=index"  class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="top media text-muted pt-3" [ngClass]="{'topRated':course.topRated}">
+    <div class="media-body pb-3 mb-0 small lh-125 border-gray">
+      <strong class="d-block text-gray-dark">{{course.title | uppercase}} <strong *ngIf="course.get_topRated()">*</strong></strong>
+      {{course.description}}
+    </div>
+    <div class="media-body pb-3 mb-0 small lh-125 ">
+      <strong class="d-block text-gray-dark">{{course.date | date:'dd MMM yyyy'}}   {{course.duration | duration}}</strong>
+      <button (click)="edit()" class="btn-primary">Edit</button>
+      <button  mwlConfirmationPopover
+               [popoverTitle]="popOverTitle"
+               [popoverMessage]="popOverMessage"
+               placement="left"
+               (confirm)="delete(i)"
+               class="btn-primary"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
