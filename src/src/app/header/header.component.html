@@ -1,0 +1,26 @@
+<div class="navbar navbar-dark bg-dark shadow-sm">
+  <div class="container d-flex justify-content-between">
+    <a  class="navbar-brand d-flex align-items-center">
+      <span class="glyphicon glyphicon-play-circle"></span>
+      <Strong>Video Course</Strong>
+    </a>
+    <a  *ngIf="isAuth" class="py-2 d-none d-md-inline-block">
+      <span class="glyphicon glyphicon-play-circle"></span>
+      <Strong>{{userName}}</Strong>
+    </a>
+    <a  *ngIf="isAuth" class="btn btn-danger" (click)="logout()">Log Off</a>
+  </div>
+</div>
+<nav *ngIf="isAuth" aria-label="breadcrumb"  >
+  <ol appCourse class="breadcrumb">
+    <li  class="breadcrumb-item active" aria-current="page">Courses</li>
+  </ol>
+</nav>
+
+<div *ngIf="isAuth" class="form-inline mt-2 mt-md-0">
+  <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" (click)="filter()" >Search</button>
+</div>
+<div *ngIf="isAuth" class="text-right mb-3">
+  <a (click)="addCourse()" class="btn btn-primary">Add course</a>
+</div>

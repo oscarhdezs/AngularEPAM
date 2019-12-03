@@ -1,0 +1,9 @@
+<div *ngIf="courses.length<=0" class="d-block text-gray-dark">
+  No Data Feel Free to Add New Courses
+</div>
+
+<app-courses-list [courses]="courses"></app-courses-list>
+
+<small class="d-block text-center mt-3">
+  <a  (click)="loadMore()" href="#">Load More</a>
+</small>
