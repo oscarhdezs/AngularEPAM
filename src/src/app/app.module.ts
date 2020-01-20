@@ -21,6 +21,7 @@ import { AuthorsComponent } from './authors/authors.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {AppRoutingModule} from './app-routing.module';
 import { HomePageComponent } from './home-page/home-page.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule,
     ConfirmationPopoverModule.forRoot({confirmButtonType: 'danger'}),
     CoreModule.forRoot({ storage: sessionStorage})
   ],

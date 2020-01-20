@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CourseService} from '../service/course/course.service';
-import {Course} from '../model/course';
+// import {Course} from '../model/course';
 import {AuthorizationService} from '../service/authorization/authorization.service';
 import {Router} from '@angular/router';
+import {Courses} from '../model/courses';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
 
   @Output() logoutEvent = new EventEmitter<string>();
   @Output() isAddCourse = new EventEmitter<boolean>();
-  course: Course;
+  @Output() searchCourse = new EventEmitter<Courses[]>();
+  courses: Courses[] = [];
   isAuth: boolean;
   userName: string;
   constructor(private courseService: CourseService,
@@ -29,8 +31,11 @@ export class HeaderComponent implements OnInit {
   addCourse() {
     this.router.navigate(['courses/new']);
   }
-  filter() {
+  filter(filter: HTMLInputElement) {
     console.log('Filtrando');
+    this.courses = this.courseService.getListSearch(5, filter.value);
+    this.searchCourse.emit(this.courses);
+    // this.router.navigate(['courses']);
   }
   logout() {
     console.log('Logout');

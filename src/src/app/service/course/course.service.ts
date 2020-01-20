@@ -1,45 +1,56 @@
-import {Inject, Injectable} from '@angular/core';
-import {Course} from '../../model/course';
+import { Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Courses} from '../../model/courses';
+import { Observable } from 'rxjs';
+import {Author} from '../../model/author';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
+  constructor(private httpClient: HttpClient) { }
+  public courses: Courses[] = [];
 
-  constructor() { }
-
-  courses = [
-    new Course('Video Course 1. Tag Name', 120, new Date(2019, 10, 13),
-      'Learn how to use the Tag Name attribute', true),
-    new Course('Video Course 2. Hook LifeCycle', 180, new Date(2019, 12, 12),
-      'Learn how to implements the hook lifecycle in our components', false),
-    new Course('Video Course 3. Components',  400, new Date(2019, 1, 15),
-      'Learn how to create components using the cli utility', true)
-  ];
-
-  getList() {
+  getList(count: number) {
     console.log('get All list');
+    this.httpClient.get('http://localhost:3004/courses/?start=0&count=' + count)
+      .subscribe((items: Courses[]) => {
+        this.courses = items;
+        console.log(items);
+      });
     return this.courses;
   }
 
-  createCourse(course: Course) {
-    console.log('Create course');
-    this.courses.push(course);
+  getListSearch(count: number, search: string) {
+    console.log('get All list search---->');
+    this.httpClient.get('http://localhost:3004/courses/?start=0&count=' + count + '&textFragment=' + search)
+      .subscribe((items: Courses[]) => {
+        this.courses = items;
+        console.log(items);
+      });
+    return this.courses;
   }
 
-  getItemById(id: number): Course {
+  deleteCourse(id: number): Observable<{}> {
+    console.log('Delete course id:' + id);
+    return this.httpClient.delete('http://localhost:3004/courses/' + id);
+  }
+
+  addCourse(course: Courses): Observable<Courses> {
+    const id = course.id;
+    const name = course.name;
+    const date = course.date;
+    const length = course.length;
+    const isTopRated = course.isTopRated;
+    const author = Author;
+    return this.httpClient.post<Courses>('http://localhost:3004/courses/', {id, name , date, length, author, isTopRated});
+  }
+  getItemById(id: number): Courses {
     console.log('get Item By Id');
     return this.courses[id];
   }
 
   updateItem() {
     console.log('Update Item');
-  }
-
-  removeItem(id: number): void {
-    console.log(this.courses);
-    console.log('Remove Item');
-    this.courses.splice(id, 1);
-    console.log(this.courses);
   }
 }

@@ -8,12 +8,16 @@ import {CourseService} from '../service/course/course.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesPageComponent implements OnInit {
-  constructor() { }
+  count: number;
+  constructor(private courseService: CourseService) { }
   @Input() courses;
   ngOnInit() {
+    this.count = 5;
   }
 
   loadMore() {
+    this.count = this.count + 3;
+    this.courses = this.courseService.getList(this.count);
     console.log('loading more content');
   }
 }

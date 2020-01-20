@@ -1,7 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CourseService} from '../service/course/course.service';
-import {Course} from '../model/course';
+import {Courses} from '../model/courses';
+import {Author} from '../model/author';
+// import {Courseso} from '../model/course';
 
 @Component({
   selector: 'app-add-courses-page',
@@ -16,8 +18,8 @@ export class AddCoursesPageComponent implements OnInit {
   date: Date;
   dateStr: string;
   duration: number;
-  authors: string;
-  course: Course;
+  authors: Author;
+  course: Courses;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -34,24 +36,31 @@ export class AddCoursesPageComponent implements OnInit {
     }
   }
 
-  fillCourse(course: Course): void {
+  fillCourse(course: Courses): void {
+    this.id = course.get_id();
     this.title = course.get_title();
     this.date = course.get_date();
     this.duration = course.get_duration();
     this.description = course.get_description();
+    this.authors = course.get_author();
   }
   fillToCourse(): void {
     const dateSplit = this.dateStr.split('.');
-    this.course = new Course(
-      this.title, this.duration,
+    this.course = new Courses(
+      this.id,
+      this.title,
+      this.description,
+      false,
       new Date(parseInt(dateSplit[0], 10), parseInt(dateSplit[1], 10), parseInt(dateSplit[2], 10)),
-      this.description, false
+      this.duration,
+      this.authors
     );
   }
   save() {
     this.fillToCourse();
     console.log(this.course);
-    this.courseService.createCourse(this.course);
+    this.courseService.addCourse(this.course).subscribe();
+  //  this.courseService.createCourse(this.course);
     this.router.navigate(['courses']);
   }
 }

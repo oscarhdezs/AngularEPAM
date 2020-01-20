@@ -16,6 +16,7 @@ export class CoursesListComponent implements OnInit {
   constructor(private courseService: CourseService) { }
 
   ngOnInit() {
+    console.log(console);
   }
 
   edit() {
@@ -23,7 +24,7 @@ export class CoursesListComponent implements OnInit {
   }
   delete(id: number) {
     console.log('delete content', id);
-    this.courseService.removeItem(id);
-
+   // this.courseService.removeItem(id);
+    this.courseService.deleteCourse( id ).subscribe();
   }
 }

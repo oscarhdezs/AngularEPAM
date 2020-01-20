@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {CourseService} from '../service/course/course.service';
 import {AuthorizationService} from '../service/authorization/authorization.service';
 import {APP_STORAGE} from '../core/core.module';
+import {Courses} from '../model/courses';
 
 @Component({
   selector: 'app-home-page',
@@ -20,7 +21,7 @@ export class HomePageComponent implements OnInit {
               @Inject(APP_STORAGE) private  storage) { }
 
   ngOnInit() {
-    this.courses = this.courseService.getList();
+    this.courses = this.courseService.getList(5);
     this.authenticated = this.authService.isAuthenticated();
     console.log('is ?' + this.authenticated);
     this.isAddCourse = false;
@@ -34,5 +35,8 @@ export class HomePageComponent implements OnInit {
 
   addCourse() {
     this.isAddCourse = true;
+  }
+  filterCourse(courses: Courses[]) {
+    this.courses = courses;
   }
 }
