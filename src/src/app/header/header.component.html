@@ -18,8 +18,7 @@
 </nav>
 
 <div *ngIf="isAuth" class="form-inline mt-2 mt-md-0">
-  <input class="form-control mr-sm-2" type="text" placeholder="Search" #search aria-label="Search">
-  <button class="btn btn-outline-success my-2 my-sm-0" (click)="filter(search)" >Search</button>
+  <input class="form-control mr-sm-2" type="text" placeholder="Search" #search aria-label="Search" (keyup)="searchSubject.next($event)">
 </div>
 <div *ngIf="isAuth" class="text-right mb-3">
   <a (click)="addCourse()" class="btn btn-primary">Add course</a>

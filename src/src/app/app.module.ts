@@ -21,7 +21,9 @@ import { AuthorsComponent } from './authors/authors.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {AppRoutingModule} from './app-routing.module';
 import { HomePageComponent } from './home-page/home-page.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
+import { LoadingScreenInterceptor } from './loading.interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import {HttpClientModule} from '@angular/common/http';
     AuthorsComponent,
     NotFoundComponent,
     HomePageComponent,
+    LoadingScreenComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,13 @@ import {HttpClientModule} from '@angular/common/http';
     ConfirmationPopoverModule.forRoot({confirmButtonType: 'danger'}),
     CoreModule.forRoot({ storage: sessionStorage})
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingScreenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

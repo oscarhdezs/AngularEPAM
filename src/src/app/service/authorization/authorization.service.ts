@@ -2,7 +2,6 @@ import {Inject, Injectable} from '@angular/core';
 import {APP_STORAGE} from '../../core/core.module';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-// import {Course} from '../../model/course';
 import {switchMap} from 'rxjs/operators';
 import {Courses} from '../../model/courses';
 
@@ -12,6 +11,7 @@ import {Courses} from '../../model/courses';
 export class  AuthorizationService {
 
   public token: string;
+  public userInfo: string;
   public courses: Courses[];
 
   constructor(@Inject(APP_STORAGE) private  storage,
@@ -26,6 +26,7 @@ export class  AuthorizationService {
           return this.httpClient.get<any>('http://localhost:3004/courses');
         })
       );
+
   }
 
   logout() {
@@ -43,13 +44,11 @@ export class  AuthorizationService {
     return this.storage.getItem('authenticated');
   }
 
-  getUserInfo(): string {
-    console.log('User information' + this.storage.getItem('name'));
-    return this.storage.getItem('name');
+  getToken(): string {
+    return this.token['token'];
   }
 
-  setUserInfo(name: string) {
-    this.storage.getItem('name');
-    this.storage.setItem('name', name);
+  getUserInfo(): Observable<string> {
+    return this.httpClient.post<string>('http://localhost:3004/auth/userinfo', { token : this.getToken()});
   }
 }
