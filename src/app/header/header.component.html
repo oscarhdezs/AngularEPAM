@@ -1,14 +1,14 @@
 <div class="navbar navbar-dark bg-dark shadow-sm">
   <div class="container d-flex justify-content-between">
-    <a href="#" class="navbar-brand d-flex align-items-center">
+    <a  class="navbar-brand d-flex align-items-center">
       <span class="glyphicon glyphicon-play-circle"></span>
       <Strong>Video Course</Strong>
     </a>
-    <a  *ngIf="isAuth" class="py-2 d-none d-md-inline-block" href="#">
+    <a  *ngIf="isAuth" class="py-2 d-none d-md-inline-block">
       <span class="glyphicon glyphicon-play-circle"></span>
       <Strong>{{userName}}</Strong>
     </a>
-    <a  *ngIf="isAuth" class="py-2 d-none d-md-inline-block" href="#" (click)="logout()">Log Off</a>
+    <a  *ngIf="isAuth" class="btn btn-danger" (click)="logout()">Log Off</a>
   </div>
 </div>
 <nav *ngIf="isAuth" aria-label="breadcrumb"  >
@@ -18,9 +18,8 @@
 </nav>
 
 <div *ngIf="isAuth" class="form-inline mt-2 mt-md-0">
-  <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-  <button class="btn btn-outline-success my-2 my-sm-0" (click)="filter()" >Search</button>
+  <input class="form-control mr-sm-2" type="text" placeholder="Search" #search aria-label="Search" (keyup)="searchSubject.next($event)">
 </div>
 <div *ngIf="isAuth" class="text-right mb-3">
-  <a href="#" (click)="addCourse()" class="btn btn-primary">Add course</a>
+  <a (click)="addCourse()" class="btn btn-primary">Add course</a>
 </div>

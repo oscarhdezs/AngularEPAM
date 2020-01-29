@@ -1,7 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {CourseService} from './service/course/course.service';
-import {APP_STORAGE} from './core/core.module';
-import {AuthorizationService} from './service/authorization/authorization.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, RouterEvent} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,29 +8,12 @@ import {AuthorizationService} from './service/authorization/authorization.servic
 })
 export class AppComponent implements  OnInit {
 
-  constructor(private courseService: CourseService,
-              private authService: AuthorizationService,
-              @Inject(APP_STORAGE) private  storage) {}
-
-  courses = [];
-  authenticated ;
-  title = 'task1';
-  isAddCourse: boolean;
-
+  constructor(private router: Router,
+              private route: ActivatedRoute) {
+    this.router.events.subscribe((event: RouterEvent) => {
+      console.log('event--->:' + event);
+    });
+  }
   ngOnInit(): void {
-    this.courses = this.courseService.getList();
-    this.authenticated = this.authService.isAuthenticated();
-    console.log('is ?' + this.authenticated);
-    this.isAddCourse = false;
-  }
-
-  logout(): void {
-    console.log('Event emmited');
-    this.authService.logout();
-    this.authenticated = this.authService.isAuthenticated();
-  }
-
-  addCourse() {
-    this.isAddCourse = true;
   }
 }

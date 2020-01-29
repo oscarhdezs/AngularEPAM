@@ -1,7 +1,10 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {CourseService} from '../service/course/course.service';
-import {Course} from '../model/course';
 import {AuthorizationService} from '../service/authorization/authorization.service';
+import {Router} from '@angular/router';
+import {Courses} from '../model/courses';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {debounceTime, filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -9,37 +12,53 @@ import {AuthorizationService} from '../service/authorization/authorization.servi
   styleUrls: ['./header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() logoutEvent = new EventEmitter<string>();
   @Output() isAddCourse = new EventEmitter<boolean>();
-  course: Course;
+  @Output() searchCourse = new EventEmitter<Courses[]>();
+
+  searchSubject = new Subject<KeyboardEvent>();
+  searchSubscription: Subscription;
+
+  courses: Courses[] = [];
   isAuth: boolean;
   userName: string;
+
   constructor(private courseService: CourseService,
-              private authService: AuthorizationService) { }
+              private authService: AuthorizationService,
+              private router: Router) { }
 
   ngOnInit() {
     this.isAuth = this.authService.isAuthenticated() === 'true' ? true : false;
     console.log('is Auth:' + this.isAuth);
+    this.authService.getUserInfo().subscribe( (userInfo) => {
+      this.userName = userInfo['name'].first;
+    } );
+    this.searchSubscription =  this.searchSubject.asObservable()
+      .pipe(
+        debounceTime(300),
+        map( event => {
+          return event.target['value'];
+        }),
+        filter( value => value.length > 3)
+      ).subscribe((value) => {
+        this.courses = this.courseService.getListSearch(5, value);
+        this.searchCourse.emit(this.courses);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription.unsubscribe();
   }
 
   addCourse() {
-    console.log('Create course...');
-    this.course = new Course('Video Course 4. Dependency Injection',  700, new Date(2019, 11, 18),
-      'Learn how to use the dependency injenction, the module, the service and implements', true);
-    this.courseService.createCourse(this.course);
-    this.userName = this.authService.getUserInfo();
-    console.log('user:' + this.userName);
-    this.isAddCourse.emit(true);
-  }
-  filter() {
-    console.log('Filtrando');
+    this.router.navigate(['courses/new']);
   }
   logout() {
     console.log('Logout');
     this.logoutEvent.emit('logout');
-//    this.authService.logout();
     this.isAuth = !this.isAuth;
+    this.router.navigate(['login']);
   }
 }

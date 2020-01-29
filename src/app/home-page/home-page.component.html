@@ -1,0 +1,9 @@
+<app-header
+  (isAddCourse)="addCourse()"
+  (logoutEvent)="logout()"
+  (searchCourse)="filterCourse($event)"
+></app-header>
+<app-courses-page
+  [courses]="courses"
+></app-courses-page>
+<app-footer></app-footer>

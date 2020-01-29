@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthorizationService} from '../service/authorization/authorization.service';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-login-page',
@@ -8,19 +11,20 @@ import {AuthorizationService} from '../service/authorization/authorization.servi
 })
 export class LoginPageComponent implements OnInit {
 
-  isAuth: boolean;
+  public courses: Observable<any>;
 
-  constructor(private authService: AuthorizationService) { }
+  constructor(private authService: AuthorizationService,
+              private router: Router,
+              private http: HttpClient) { }
 
   ngOnInit() {
-    console.log('auth?' + this.authService.isAuthenticated());
+    console.log('is auth?' + this.authService.isAuthenticated());
   }
 
-  login(name: HTMLInputElement, pwd: HTMLInputElement) {
-    this.authService.login();
-    console.log('loged:' + name.value + ' ' + pwd.value);
-    this.isAuth = !this.isAuth;
-    this.authService.setUserInfo(name.value);
+  login(userName: HTMLInputElement, password: HTMLInputElement) {
+     this.authService.login(userName.value, password.value ).subscribe( response => {
+       this.router.navigate(['courses']);
+     });
   }
 
 }
