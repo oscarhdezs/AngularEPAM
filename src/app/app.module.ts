@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CourseReducer} from './reducers/courses.reducer';
 import {AuthenticateReducer} from './reducers/authenticate.reducer';
 import { ConfirmationPopoverModule} from 'angular-confirmation-popover';
@@ -61,6 +61,7 @@ import {CoursesEffect} from './effects/courses.effect';
     }),
     EffectsModule.forRoot([AuthEffect, CoursesEffect]),
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     ConfirmationPopoverModule.forRoot({confirmButtonType: 'danger'}),
